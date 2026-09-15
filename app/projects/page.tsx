@@ -1,10 +1,14 @@
 import ProjectList from "@/components/ProjectList";
 import { Project } from "@/lib/projects-db";
 
+export const dynamic = "force-dynamic";
+
 export default async function projects() {
-  const result = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/projects`,
-  );
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
+
+  const result = await fetch(`${baseUrl}/api/projects`);
   const projects: Project[] = await result.json();
   return (
     <main className="max-w-4xl mx-auto px-4 py-12">
