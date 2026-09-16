@@ -1,15 +1,10 @@
-import { Project } from "@/lib/projects-db";
+import { Project, getProjects } from "@/lib/projects-db";
 import ProjectList from "@/components/ProjectList";
 
 export const dynamic = "force-dynamic";
 
 export default async function openSourceProjects() {
-  const baseUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
-    : "http://localhost:3000";
-
-  const response = await fetch(`${baseUrl}/api/projects?type=opensource`);
-  const projects: Project[] = await response.json();
+  const projects: Project[] = await getProjects("opensource");
   return (
     <main className="max-w-4x1 mx-auto px-4 py-12">
       <h2 className="text-3xl font-bold mb-4">Open Source Projects</h2>
